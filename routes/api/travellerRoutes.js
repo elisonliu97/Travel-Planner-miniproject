@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Traveller, Trip } = require('../../models');
+const { Location, Traveller, Trip } = require('../../models');
 
 router.get('/', async (req, res) => {
     try {
@@ -14,7 +14,9 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const travellerData = await Traveller.findByPk(req.params.id, {
-            include: [{ model: Trip }],
+            include: [
+                { model: Location }
+            ],
         })
         if (!travellerData) {
             res.status(404).json({ message: 'No traveller found with this id' });
